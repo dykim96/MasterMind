@@ -3,15 +3,14 @@
  *  Section: 16185
  *  Name1: Doyoung Kim
  *  UTEID1: dk24338
- *  Name2:
- *  UTEID2:
+ *  Name2: Hyo-Jung Kim
+ *  UTEID2: hk6336
  */
 package assignmentBonus;
 
 import java.applet.Applet;
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.JComboBox;
 
 public class MasterMind extends Applet implements MouseListener, MouseMotionListener{
 	
