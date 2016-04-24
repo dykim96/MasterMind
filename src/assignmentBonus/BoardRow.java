@@ -27,6 +27,10 @@ public class BoardRow {
 		}
 	}
 	
+	public Color[] GetGuess(){
+		return pegColors;
+	}
+	
 	public boolean Click(int x, int y, Color c){
 		for(int i = 0; i < pegColumns.length; i++){
 			if(pegColumns[i].contains(new Point(x, y))){

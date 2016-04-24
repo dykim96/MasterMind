@@ -11,11 +11,18 @@ package assignmentBonus;
 import java.applet.Applet;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class MasterMind extends Applet implements MouseListener, MouseMotionListener{
+
+	private final Color BROWN = new Color(165, 42, 42);
 	
+	private int x, y;
 	private int mouseX, mouseY;
 	private int guessNumber, pegNumber;
+	private Rectangle board;
+	private ArrayList<BoardRow> rows;
+	private Color selectedColor;
 	public void init(){
 		guessNumber = 12;
 		pegNumber = 4;
@@ -23,6 +30,17 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 		mouseY = 0;
 		addMouseListener(this);
 		addMouseMotionListener(this);
+		ResetBoard();
+	}
+	
+	private void ResetBoard(){
+		x = 36 + (6 - pegNumber)*18;
+		board = new Rectangle(x, 36, 36*pegNumber, 36 + 36*guessNumber);
+		y = guessNumber * 36 + 36;
+		rows = new ArrayList<BoardRow>();
+		rows.add(new BoardRow(x, y, pegNumber));
+		//selectedColor = Color.BLACK;
+		selectedColor = Color.YELLOW;
 	}
 	
 	public void mouseEntered( MouseEvent e ) { }
@@ -32,6 +50,7 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 	public void mouseClicked( MouseEvent e ) {
 		// called after a press and release of a mouse button with no motion in between
 	    // (If the user presses, drags, and then releases, there will be no click event generated.)
+		rows.get(rows.size() - 1).Click(mouseX, mouseY, selectedColor);
 	}
 	
 	// called during motion when no buttons are down
@@ -71,7 +90,7 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 		//extra space on bottom for selecting a color
 		//most top row is always reserved for the answer(generated pattern)
 		//maybe make each rows into a separate class
-		for(int i = 1; i < 14; i++){
+		/*for(int i = 1; i < 14; i++){
 		    g.drawRect(36, 36*i, 36*6, 36);
 		    g.drawOval(39, 3 + 36*i, 30, 30);
 		    g.drawOval(39 + 36, 3 + 36*i, 30, 30);
@@ -79,7 +98,15 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 		    g.drawOval(39 + 108, 3 + 36*i, 30, 30);
 		    g.drawOval(39 + 144, 3 + 36*i, 30, 30);
 		    g.drawOval(39 + 180, 3 + 36*i, 30, 30);
-	    }
+	    }*/
+    	Graphics2D g2 = (Graphics2D)g;
+    	g2.setColor(BROWN);
+    	g2.fill(board);
+    	g2.setColor(Color.BLACK);
+    	g2.draw(board);
+		for(int i = 0; i < rows.size(); i++){
+			rows.get(i).Draw(g);
+		}
 		g.drawRect(0, 468, 36, 36);//feedback
 		g.drawRect(252, 468, 36, 36);//confirmButton
 	    g.drawString("(" + mouseX + "," + mouseY + ")", 0, 10);
