@@ -12,25 +12,37 @@ import java.applet.Applet;
 import java.awt.*;
 import java.awt.event.*;
 
-public class MasterMind extends Applet implements KeyListener{
-
-	String s = "";
+public class MasterMind extends Applet implements MouseListener, MouseMotionListener{
+	
+	private int mouseX, mouseY;
 	public void init(){
-		addKeyListener(this);
+		mouseX = 0;
+		mouseY = 0;
+		addMouseListener(this);
+		addMouseMotionListener(this);
 	}
-	public void keyPressed( KeyEvent e ) { }
-	public void keyReleased( KeyEvent e ) {
-		char c = e.getKeyChar();
-		if ( c != KeyEvent.CHAR_UNDEFINED ) {
-			s = s + c;
-			System.out.println(s);
-			repaint();
-			e.consume();
-		}
+	
+	public void mouseEntered( MouseEvent e ) { }
+	public void mouseExited( MouseEvent e ) { }
+	public void mousePressed( MouseEvent e ) { }
+	public void mouseReleased( MouseEvent e ) { }
+	public void mouseClicked( MouseEvent e ) {
+		// called after a press and release of a mouse button with no motion in between
+	    // (If the user presses, drags, and then releases, there will be no click event generated.)
 	}
-	public void keyTyped( KeyEvent e ) {}
+	
+	// called during motion when no buttons are down
+	public void mouseMoved(MouseEvent e){
+		mouseX = e.getX();
+		mouseY = e.getY();
+		repaint();
+		e.consume();
+	}
+	// called during motion with buttons down
+	public void mouseDragged(MouseEvent e){
+	}
 	
 	public void paint(Graphics g) {
-	    g.drawString(s, 0, 10);
+	    g.drawString("(" + mouseX + "," + mouseY + ")", 0, 10);
 	}
 }
