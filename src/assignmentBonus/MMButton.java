@@ -10,8 +10,10 @@ import java.awt.Rectangle;
 public class MMButton {
 	private Rectangle button;
 	private int mouseX, mouseY;
-	public MMButton(int x, int y, int width, int height){
+	private String text;
+	public MMButton(int x, int y, int width, int height, String text){
 		button = new Rectangle(x, y, width, height);
+		this.text = text;
 	}
 	
 	public void SetXY(int x, int y){
@@ -45,11 +47,11 @@ public class MMButton {
 			}
 			g2.fill(button);
 			g.setColor(Color.WHITE);
-			g.drawString("GO", button.x + 2, button.y + 25);
+			g.drawString(text, button.x + 2, button.y + 25);
 		}
 		else{
 			g.setColor(Color.BLACK);
-			g.drawString("GO", button.x + 2, button.y + 25);
+			g.drawString(text, button.x + 2, button.y + 25);
 		}
 		g2.setColor(Color.BLACK);
 		g2.draw(button);

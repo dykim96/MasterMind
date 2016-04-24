@@ -23,6 +23,7 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 	private boolean leftClick;
 	private int guessNumber, pegNumber, numTry;
 	private Rectangle board;
+	private ColorPalette cp;
 	private MMButton checkButton;
 	private ArrayList<BoardRow> rows;
 	private Color selectedColor;
@@ -44,10 +45,11 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 		x = 36 + (6 - pegNumber)*18;
 		board = new Rectangle(x, 36, 36*pegNumber, 36 + 36*guessNumber);
 		y = guessNumber * 36 + 36;
-		checkButton = new MMButton(x + board.width, y, 36, 36);
+		checkButton = new MMButton(x + board.width, y, 36, 36, "GO");
 		rows = new ArrayList<BoardRow>();
 		rows.add(new BoardRow(x, y, pegNumber));
-		selectedColor = Color.RED;
+		cp = new ColorPalette(36, y + 36);
+		selectedColor = cp.GetColor(0);
 	}
 	
 	public void mouseEntered( MouseEvent e ) { }
@@ -66,6 +68,10 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 		
 		//check if the mouse click was made inside pegs and change the color, if it was
 		rows.get(rows.size() - 1).Click(mouseX, mouseY, selectedColor);
+		Color tempColor = cp.Click(mouseX, mouseY);
+		if(tempColor != Color.BLACK){
+			selectedColor = tempColor;
+		}
 		//if click was made inside checkRect and if guess is complete, meaning every color was changed
 		//at least once, check the guess with answer and proceed accordingly
 		if(checkButton.Contains(mouseX, mouseY) && rows.get(rows.size() - 1).IsComplete()){
@@ -135,6 +141,8 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 		g.drawRect(0, 468, 36, 36);//feedback
 		//checkButton
 		checkButton.Draw(g, leftClick);
+		//color palette
+    	cp.Draw(g);
 	    g.drawString("(" + mouseX + "," + mouseY + ")", 0, 10);
 	    if(victory){
 	    	
