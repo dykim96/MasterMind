@@ -2,7 +2,7 @@ Name1: Doyoung Kim
 
 EID1: dk24338
 
-//Hyo's github accound it doasi
+//Hyo's github accound it doasini
 //but for some reason his push was recorded as doasi_000
 Name2: Hyo-Jung Kim
 
