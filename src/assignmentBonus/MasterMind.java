@@ -46,19 +46,43 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 	public void mouseDragged(MouseEvent e){
 	}
 	
+	//for double buffer
+	public void update(Graphics g){
+		//double buffer used to avoid flickering
+    	Graphics offgc;
+        Image offscreen = null;
+        Dimension d = this.getSize();
+
+        // create the offscreen buffer and associated Graphics
+        offscreen = createImage(d.width, d.height);
+        offgc = offscreen.getGraphics();
+        // clear the exposed area
+        offgc.setColor(getBackground());
+        offgc.fillRect(0, 0, d.width, d.height);
+        offgc.setColor(getForeground());
+        // do normal redraw
+        paint(offgc);
+        // transfer offscreen to window
+        g.drawImage(offscreen, 0, 0, this);
+	}
 	public void paint(Graphics g) {
-		//max size Width 216, Height 504 (217, 505 as parameter)
+		//max size Width 288, Height 540 (289, 541 as parameter)
 		//up to 6pegs, up to 12 guesses
+		//extra space on top for options
+		//extra space on bottom for selecting a color
+		//most top row is always reserved for the answer(generated pattern)
 		//maybe make each rows into a separate class
 		for(int i = 1; i < 14; i++){
-		    g.drawRect(0, 36*i, 36*6, 36);
-		    g.drawOval(3, 3 + 36*i, 30, 30);
-		    g.drawOval(3 + 36, 3 + 36*i, 30, 30);
-		    g.drawOval(3 + 72, 3 + 36*i, 30, 30);
-		    g.drawOval(3 + 108, 3 + 36*i, 30, 30);
-		    g.drawOval(3 + 144, 3 + 36*i, 30, 30);
-		    g.drawOval(3 + 180, 3 + 36*i, 30, 30);
+		    g.drawRect(36, 36*i, 36*6, 36);
+		    g.drawOval(39, 3 + 36*i, 30, 30);
+		    g.drawOval(39 + 36, 3 + 36*i, 30, 30);
+		    g.drawOval(39 + 72, 3 + 36*i, 30, 30);
+		    g.drawOval(39 + 108, 3 + 36*i, 30, 30);
+		    g.drawOval(39 + 144, 3 + 36*i, 30, 30);
+		    g.drawOval(39 + 180, 3 + 36*i, 30, 30);
 	    }
+		g.drawRect(0, 468, 36, 36);//feedback
+		g.drawRect(252, 468, 36, 36);//confirmButton
 	    g.drawString("(" + mouseX + "," + mouseY + ")", 0, 10);
 	}
 }
