@@ -27,14 +27,21 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 	private MMButton checkButton;
 	private ArrayList<BoardRow> rows;
 	private Color selectedColor;
+	private ArrayList<FeedBack> feed_Back;
+	private Generator answer;
+	
 	public void init(){
-		guessNumber = 2;
-		pegNumber = 4;
+		guessNumber = 8;
+		pegNumber = 6;
 		mouseX = 0;
 		mouseY = 0;
 		leftClick = false;
 		addMouseListener(this);
 		addMouseMotionListener(this);
+		
+		
+		
+		
 		ResetBoard();
 	}
 	
@@ -50,6 +57,9 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 		rows.add(new BoardRow(x, y, pegNumber));
 		cp = new ColorPalette(36, y + 36);
 		selectedColor = cp.GetColor(0);
+		feed_Back = new ArrayList<FeedBack>();
+		answer = new Generator (x,36,pegNumber);  // location has to be changed
+		
 	}
 	
 	public void mouseEntered( MouseEvent e ) { }
@@ -77,6 +87,8 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 		if(checkButton.Contains(mouseX, mouseY) && rows.get(rows.size() - 1).IsComplete()){
 			//get the feedback from checking
 			//if guess was correct, player wins
+			feed_Back.add(new FeedBack(x-36 ,y, pegNumber, answer.get_answer(), rows.get(rows.size()-1).GetGuess()));
+			
 			//else try again until player wins or runs out of tries
 			if(numTry < guessNumber){
 				numTry++;
@@ -138,7 +150,11 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 		for(int i = 0; i < rows.size(); i++){
 			rows.get(i).Draw(g);
 		}
-		g.drawRect(0, 468, 36, 36);//feedback
+		//feedback
+		answer.Draw(g2);
+		for(int i = 0 ; i < feed_Back.size() ; i ++){
+			feed_Back.get(i).Draw(g2);
+		}
 		//checkButton
 		checkButton.Draw(g, leftClick);
 		//color palette

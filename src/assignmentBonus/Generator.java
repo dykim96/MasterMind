@@ -79,5 +79,8 @@ public class Generator
 		this.done = true;
 	}
 	
+	public Color[] get_answer(){
+		return ans_Col;
+	}
 	
 }

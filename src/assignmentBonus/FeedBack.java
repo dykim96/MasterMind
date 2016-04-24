@@ -20,12 +20,13 @@ public class FeedBack
 	int ori_x = 0;
 	int ori_y = 0;
 	int num_Peg;
+	int between = 2;
 	Rectangle frame;
 	ArrayList<Ellipse2D.Double> dots;
 	int color_Match;
 	int all_Match;
 	int total_Match;
-	int ball_Size = 15;
+	int ball_Size = 14;
 	
 	ArrayList<Color> answer_Array;
 	ArrayList<Color> guess_Array;
@@ -54,13 +55,14 @@ public class FeedBack
 		
 		if (num_Peg != 4){		// if number of peg is 4, peg size is 12, other wise different
 			ball_Size = 12;
+			between = 3;
 		}
-		int count = 0;
 		for (int i = 0 ;  i < total_Match ; i ++){	//make dots and put into the arraylist
-			Ellipse2D.Double dot = new Ellipse2D.Double(ori_x + 3 + (6 + ball_Size)*(count%2), // location
-																	  ori_y + 3 + (6 + ball_Size)*(count/2), ball_Size, ball_Size);
+			Ellipse2D.Double dot = new Ellipse2D.Double(ori_x + between + (between*2 + ball_Size)*(i%2), // location
+																	  ori_y + between + (between*2 + ball_Size)*(i/2), ball_Size, ball_Size);
 			dots.add(dot);
 		}
+		
 	}
 	
 	public void Draw(Graphics2D g){
@@ -71,8 +73,8 @@ public class FeedBack
 			g.fill(dots.get(i));
 			g.draw(dots.get(i));
 		}
-		g.setColor(Color.white);
-		for (int i  = all_Match ; i < color_Match ; i++){
+		g.setColor(Color.GRAY);
+		for (int i  = all_Match ; i < total_Match ; i++){
 			g.fill(dots.get(i));
 			g.draw(dots.get(i));
 		}
