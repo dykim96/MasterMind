@@ -32,6 +32,7 @@ public class MMButton {
 		//save original color
 		Color temp = g.getColor();
 		
+		Font tempF = g.getFont();
     	Graphics2D g2 = (Graphics2D)g;
     	
 		g.setFont(new Font("Arial", Font.BOLD, 20));
@@ -55,5 +56,6 @@ public class MMButton {
     	
     	//load original color
     	g.setColor(temp);
+    	g.setFont(tempF);
 	}
 }

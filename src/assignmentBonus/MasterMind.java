@@ -135,7 +135,7 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 		g.drawRect(0, 468, 36, 36);//feedback
 		//checkButton
 		checkButton.Draw(g, leftClick);
-	    g.drawString("(" + mouseX + "," + mouseY + ")", 0, 20);
+	    g.drawString("(" + mouseX + "," + mouseY + ")", 0, 10);
 	    if(victory){
 	    	
 	    }
