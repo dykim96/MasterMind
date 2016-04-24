@@ -33,11 +33,8 @@ public class Generator
 		frame = new BoardRow(x, y, num_Peg);
 		Random rand = new Random();
 		for (int i = 0 ; i < num_Peg ; i++){
-			//adfasdfasdf
-			//BoardRow.   pick[rand.nextInt(6)];
-			//frame.
+			frame.ColorPeg(i, pick[rand.nextInt(6)]);
 		}
-		// TODO Auto-generated constructor stub
 	}
 
 }

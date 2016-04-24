@@ -50,7 +50,7 @@ public class FeedBack
 			answer_Array.add(answer[i]);
 			guess_Array.add(guess[i]);
 		}
-		this.ans_chk();			// check the answer
+		this.Ans_chk();			// check the answer
 		
 		if (num_Peg != 4){		// if number of peg is 4, peg size is 12, other wise different
 			ball_Size = 12;
@@ -78,7 +78,7 @@ public class FeedBack
 		}
 	}
 	
-	public void ans_chk(){
+	public void Ans_chk(){
 		
 		for (int i = 0; i < answer_Array.size() ; i++){				// find all match and get rid off all those are matched
 			if( answer_Array.get(i).equals(guess_Array.get(i))) {
@@ -104,7 +104,7 @@ public class FeedBack
 		total_Match = color_Match + all_Match;
 	}
 	
-	public boolean chk_all() {
+	public boolean Chk_all() {
 		if (num_Peg == all_Match) return true;
 		return false;
 	}

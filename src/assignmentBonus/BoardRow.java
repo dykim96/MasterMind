@@ -33,6 +33,12 @@ public class BoardRow {
 		return pegColors;
 	}
 	
+	//change the color of the peg
+	public void ColorPeg(int index, Color col){
+		if (index < pegColumns.length)
+			pegColors[index] = col;
+	}
+	
 	//Check if all pegs' colors got changed
 	public boolean IsComplete(){
 		for(int i = 0; i < pegColors.length; i++){
