@@ -35,7 +35,7 @@ public class Generator
 	public Generator(int x, int y, int num_Peg)
 	{
 		q_Font = new Font("Arial", Font.BOLD, 20);
-		this.done = true;
+		this.done = false;
 		ori_x = x;
 		ori_y = y;
 		this.num_Peg = num_Peg;
@@ -57,6 +57,7 @@ public class Generator
 			for (int i = 0 ; i < num_Peg ; i++){
 				frame.ColorPeg(i, ans_Col[i]);
 			}
+			frame.Draw(g);
 		}
 		else {
 			g.setFont(q_Font);
@@ -65,13 +66,13 @@ public class Generator
 			TextLayout layout = new TextLayout(question, q_Font, context);
 			float width = layout.getAdvance();
 			float height = layout.getAscent() + layout.getDescent();
-			
+			frame.Draw(g);
 			for (int i = 0; i < num_Peg ; i++){
-				g.drawString(question, ori_x + (18*(i+1)-width/2), ori_y+(18-height/2));
+				g.drawString(question, ori_x -18+ ((36*(i+1))-width/2), ori_y+(36-height/2));
 			}
 			
 		}
-		frame.Draw(g);
+		
 		
 	}
 	

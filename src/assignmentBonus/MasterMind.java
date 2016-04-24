@@ -31,8 +31,8 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 	private Generator answer;
 	
 	public void init(){
-		guessNumber = 8;
-		pegNumber = 6;
+		guessNumber = 12;
+		pegNumber = 4;
 		mouseX = 0;
 		mouseY = 0;
 		leftClick = false;
@@ -157,13 +157,14 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 		}
 		//checkButton
 		checkButton.Draw(g, leftClick);
-		//color palette
+		//color palette/
     	cp.Draw(g);
 	    g.drawString("(" + mouseX + "," + mouseY + ")", 0, 10);
 	    if(victory){
 	    	
 	    }
 	    else if(gameover){
+	   	
 	    	g.drawString("GAME OVER", 80, 20);
 	    }
 	}

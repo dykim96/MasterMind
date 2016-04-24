@@ -27,7 +27,7 @@ public class FeedBack
 	int all_Match;
 	int total_Match;
 	int ball_Size = 14;
-	
+	int pushdown = 0;
 	ArrayList<Color> answer_Array;
 	ArrayList<Color> guess_Array;
 	int num_Color;
@@ -39,6 +39,7 @@ public class FeedBack
 	{
 		ori_x = x;
 		ori_y = y;
+		this.pushdown = 0;
 		this.frame = new Rectangle(x, y, 36, 36); 
 		this.num_Peg = num;
 		this.dots = new ArrayList<Ellipse2D.Double>();
@@ -54,12 +55,13 @@ public class FeedBack
 		this.Ans_chk();			// check the answer
 		
 		if (num_Peg != 4){		// if number of peg is 4, peg size is 12, other wise different
-			ball_Size = 12;
-			between = 3;
+			ball_Size = 8;
+			between = 2;
+			pushdown = 6;
 		}
 		for (int i = 0 ;  i < total_Match ; i ++){	//make dots and put into the arraylist
-			Ellipse2D.Double dot = new Ellipse2D.Double(ori_x + between + (between*2 + ball_Size)*(i%2), // location
-																	  ori_y + between + (between*2 + ball_Size)*(i/2), ball_Size, ball_Size);
+			Ellipse2D.Double dot = new Ellipse2D.Double(ori_x + between + (between*2 + ball_Size)*(i/2), // location
+																	  ori_y + pushdown + between + (between*2 + ball_Size)*(i%2), ball_Size, ball_Size);
 			dots.add(dot);
 		}
 		
