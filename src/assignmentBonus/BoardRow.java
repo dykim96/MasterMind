@@ -16,6 +16,7 @@ public class BoardRow {
 	private Ellipse2D[] pegColumns;
 	private Color[] pegColors;
 	private final Color BROWN = new Color(165, 42, 42);
+	
 	public BoardRow(int x, int y, int size){
 		row = new Rectangle(x, y, 36 * size, 36);
 		pegColumns = new Ellipse2D[size];
@@ -27,10 +28,21 @@ public class BoardRow {
 		}
 	}
 	
+	//Returns Color array, which is player's guess
 	public Color[] GetGuess(){
 		return pegColors;
 	}
 	
+	//Check if all pegs' colors got changed
+	public boolean IsComplete(){
+		for(int i = 0; i < pegColors.length; i++){
+			if(pegColors[i] == Color.BLACK)
+				return false;
+		}
+		return true;
+	}
+	
+	//Check if mouse is inside any of pegs and change color
 	public boolean Click(int x, int y, Color c){
 		for(int i = 0; i < pegColumns.length; i++){
 			if(pegColumns[i].contains(new Point(x, y))){

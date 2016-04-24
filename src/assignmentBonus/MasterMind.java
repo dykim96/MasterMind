@@ -17,40 +17,73 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 
 	private final Color BROWN = new Color(165, 42, 42);
 	
+	private boolean victory, gameover;
 	private int x, y;
 	private int mouseX, mouseY;
-	private int guessNumber, pegNumber;
+	private boolean leftClick;
+	private int guessNumber, pegNumber, numTry;
 	private Rectangle board;
+	private Rectangle checkRect;
 	private ArrayList<BoardRow> rows;
 	private Color selectedColor;
 	public void init(){
-		guessNumber = 12;
+		guessNumber = 2;
 		pegNumber = 4;
 		mouseX = 0;
 		mouseY = 0;
+		leftClick = false;
 		addMouseListener(this);
 		addMouseMotionListener(this);
 		ResetBoard();
 	}
 	
 	private void ResetBoard(){
+		victory = false;
+		gameover = false;
+		numTry = 1;
 		x = 36 + (6 - pegNumber)*18;
 		board = new Rectangle(x, 36, 36*pegNumber, 36 + 36*guessNumber);
 		y = guessNumber * 36 + 36;
+		checkRect = new Rectangle(x + board.width, y, 36, 36);
 		rows = new ArrayList<BoardRow>();
 		rows.add(new BoardRow(x, y, pegNumber));
-		//selectedColor = Color.BLACK;
-		selectedColor = Color.YELLOW;
+		selectedColor = Color.RED;
 	}
 	
 	public void mouseEntered( MouseEvent e ) { }
 	public void mouseExited( MouseEvent e ) { }
-	public void mousePressed( MouseEvent e ) { }
-	public void mouseReleased( MouseEvent e ) { }
+	public void mousePressed( MouseEvent e ) {
+		leftClick = true;
+		repaint();
+	}
+	public void mouseReleased( MouseEvent e ) {
+		leftClick = false;
+		repaint();
+	}
 	public void mouseClicked( MouseEvent e ) {
 		// called after a press and release of a mouse button with no motion in between
 	    // (If the user presses, drags, and then releases, there will be no click event generated.)
+		
+		//check if the mouse click was made inside pegs and change the color, if it was
 		rows.get(rows.size() - 1).Click(mouseX, mouseY, selectedColor);
+		//if click was made inside checkRect and if guess is complete, meaning every color was changed
+		//at least once, check the guess with answer and proceed accordingly
+		if(checkRect.contains(new Point(mouseX, mouseY)) && rows.get(rows.size() - 1).IsComplete()){
+			//get the feedback from checking
+			//if guess was correct, player wins
+			//else try again until player wins or runs out of tries
+			if(numTry < guessNumber){
+				numTry++;
+				y -= 36;
+				rows.add(new BoardRow(x, y, pegNumber));
+				checkRect = new Rectangle(x + board.width, y, 36, 36);
+			}
+			else{
+				checkRect = new Rectangle(-100, -100, 1, 1);
+				gameover = true;
+			}
+		}
+		repaint();
 	}
 	
 	// called during motion when no buttons are down
@@ -90,15 +123,6 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 		//extra space on bottom for selecting a color
 		//most top row is always reserved for the answer(generated pattern)
 		//maybe make each rows into a separate class
-		/*for(int i = 1; i < 14; i++){
-		    g.drawRect(36, 36*i, 36*6, 36);
-		    g.drawOval(39, 3 + 36*i, 30, 30);
-		    g.drawOval(39 + 36, 3 + 36*i, 30, 30);
-		    g.drawOval(39 + 72, 3 + 36*i, 30, 30);
-		    g.drawOval(39 + 108, 3 + 36*i, 30, 30);
-		    g.drawOval(39 + 144, 3 + 36*i, 30, 30);
-		    g.drawOval(39 + 180, 3 + 36*i, 30, 30);
-	    }*/
     	Graphics2D g2 = (Graphics2D)g;
     	g2.setColor(BROWN);
     	g2.fill(board);
@@ -108,7 +132,31 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 			rows.get(i).Draw(g);
 		}
 		g.drawRect(0, 468, 36, 36);//feedback
-		g.drawRect(252, 468, 36, 36);//confirmButton
-	    g.drawString("(" + mouseX + "," + mouseY + ")", 0, 10);
+		//checkButton
+		g.setFont(new Font("Arial", Font.BOLD, 20));
+		if(checkRect.contains(new Point(mouseX, mouseY))){
+			if(leftClick){
+				g2.setColor(Color.DARK_GRAY);
+			}
+			else{
+				g2.setColor(Color.GRAY);
+			}
+			g2.fill(checkRect);
+			g.setColor(Color.WHITE);
+			g.drawString("GO", checkRect.x + 2, checkRect.y + 25);
+		}
+		else{
+			g.setColor(Color.BLACK);
+			g.drawString("GO", checkRect.x + 2, checkRect.y + 25);
+		}
+		g2.setColor(Color.BLACK);
+		g2.draw(checkRect);
+	    g.drawString("(" + mouseX + "," + mouseY + ")", 0, 20);
+	    if(victory){
+	    	
+	    }
+	    else if(gameover){
+	    	g.drawString("GAME OVER", 80, 20);
+	    }
 	}
 }
