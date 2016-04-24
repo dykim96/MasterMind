@@ -23,7 +23,7 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 	private boolean leftClick;
 	private int guessNumber, pegNumber, numTry;
 	private Rectangle board;
-	private Rectangle checkRect;
+	private MMButton checkButton;
 	private ArrayList<BoardRow> rows;
 	private Color selectedColor;
 	public void init(){
@@ -44,7 +44,7 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 		x = 36 + (6 - pegNumber)*18;
 		board = new Rectangle(x, 36, 36*pegNumber, 36 + 36*guessNumber);
 		y = guessNumber * 36 + 36;
-		checkRect = new Rectangle(x + board.width, y, 36, 36);
+		checkButton = new MMButton(x + board.width, y, 36, 36);
 		rows = new ArrayList<BoardRow>();
 		rows.add(new BoardRow(x, y, pegNumber));
 		selectedColor = Color.RED;
@@ -68,7 +68,7 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 		rows.get(rows.size() - 1).Click(mouseX, mouseY, selectedColor);
 		//if click was made inside checkRect and if guess is complete, meaning every color was changed
 		//at least once, check the guess with answer and proceed accordingly
-		if(checkRect.contains(new Point(mouseX, mouseY)) && rows.get(rows.size() - 1).IsComplete()){
+		if(checkButton.Contains(mouseX, mouseY) && rows.get(rows.size() - 1).IsComplete()){
 			//get the feedback from checking
 			//if guess was correct, player wins
 			//else try again until player wins or runs out of tries
@@ -76,10 +76,10 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 				numTry++;
 				y -= 36;
 				rows.add(new BoardRow(x, y, pegNumber));
-				checkRect = new Rectangle(x + board.width, y, 36, 36);
+				checkButton.SetXY(x + board.width, y);
 			}
 			else{
-				checkRect = new Rectangle(-100, -100, 1, 1);
+				checkButton.SetXY(-100, -100);
 				gameover = true;
 			}
 		}
@@ -90,6 +90,7 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 	public void mouseMoved(MouseEvent e){
 		mouseX = e.getX();
 		mouseY = e.getY();
+		checkButton.SetMouse(mouseX, mouseY);
 		repaint();
 		e.consume();
 	}
@@ -133,24 +134,7 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 		}
 		g.drawRect(0, 468, 36, 36);//feedback
 		//checkButton
-		g.setFont(new Font("Arial", Font.BOLD, 20));
-		if(checkRect.contains(new Point(mouseX, mouseY))){
-			if(leftClick){
-				g2.setColor(Color.DARK_GRAY);
-			}
-			else{
-				g2.setColor(Color.GRAY);
-			}
-			g2.fill(checkRect);
-			g.setColor(Color.WHITE);
-			g.drawString("GO", checkRect.x + 2, checkRect.y + 25);
-		}
-		else{
-			g.setColor(Color.BLACK);
-			g.drawString("GO", checkRect.x + 2, checkRect.y + 25);
-		}
-		g2.setColor(Color.BLACK);
-		g2.draw(checkRect);
+		checkButton.Draw(g, leftClick);
 	    g.drawString("(" + mouseX + "," + mouseY + ")", 0, 20);
 	    if(victory){
 	    	
