@@ -20,8 +20,8 @@ public class FeedBack
 	int ori_x = 0;
 	int ori_y = 0;
 	int num_Peg;
-	Rectangle Frame;
-	ArrayList<Ellipse2D.Double> Dots;
+	Rectangle frame;
+	ArrayList<Ellipse2D.Double> dots;
 	int color_Match;
 	int all_Match;
 	int total_Match;
@@ -38,9 +38,9 @@ public class FeedBack
 	{
 		ori_x = x;
 		ori_y = y;
-		this.Frame = new Rectangle(x, y, 36, 36); 
+		this.frame = new Rectangle(x, y, 36, 36); 
 		this.num_Peg = num;
-		this.Dots = new ArrayList<Ellipse2D.Double>();
+		this.dots = new ArrayList<Ellipse2D.Double>();
 		this.color_Match = 0;
 		this.all_Match = 0;
 		this.answer_Array = new ArrayList<Color>();
@@ -59,20 +59,22 @@ public class FeedBack
 		for (int i = 0 ;  i < total_Match ; i ++){	//make dots and put into the arraylist
 			Ellipse2D.Double dot = new Ellipse2D.Double(ori_x + 3 + (6 + ball_Size)*(count%2), // location
 																	  ori_y + 3 + (6 + ball_Size)*(count/2), ball_Size, ball_Size);
-			Dots.add(dot);
+			dots.add(dot);
 		}
 	}
 	
 	public void Draw(Graphics2D g){
+		
 		g.setColor(Color.black);
+		g.draw(frame);
 		for (int i  = 0 ; i < all_Match ; i++){
-			g.fill(Dots.get(i));
-			g.draw(Dots.get(i));
+			g.fill(dots.get(i));
+			g.draw(dots.get(i));
 		}
 		g.setColor(Color.white);
 		for (int i  = all_Match ; i < color_Match ; i++){
-			g.fill(Dots.get(i));
-			g.draw(Dots.get(i));
+			g.fill(dots.get(i));
+			g.draw(dots.get(i));
 		}
 	}
 	
