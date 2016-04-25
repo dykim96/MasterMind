@@ -241,6 +241,9 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
     	g2.fill(board);
     	g2.setColor(Color.BLACK);
     	g2.draw(board);
+    	g.setFont(new Font("Arial", Font.BOLD, 30));
+    	g.drawString("By Doyoung", 40, 40);
+    	g.drawString("& Hyo-Jung", 40, 80);
 		for(int i = 0; i < rows.size(); i++){
 			rows.get(i).Draw(g);
 		}
