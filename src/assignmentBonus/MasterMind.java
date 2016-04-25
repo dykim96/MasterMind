@@ -171,14 +171,14 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 	    g.drawString("(" + mouseX + "," + mouseY + ")", 0, 10);
 	    if(victory){
 	    	g.drawString("YOU WON", 80, 20);
-
-	    }
-	    else if(gameover){
-	    	g.drawString("GAME OVER", 80, 20);
 	    	if(!audio_Done) {
 	    		soundFile1.play();
 	    		audio_Done = true;
 	    	}
+	    }
+	    else if(gameover){
+	    	g.drawString("GAME OVER", 80, 20);
+
 	    }
 	}
 }
