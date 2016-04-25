@@ -38,6 +38,10 @@ public class MMButton {
 		return button.contains(new Point(x, y));
 	}
 	
+	public void SetText(String text){
+		this.text = text;
+	}
+	
 	public void Draw(Graphics g, boolean leftClick){
 		//save original color
 		Color temp = g.getColor();

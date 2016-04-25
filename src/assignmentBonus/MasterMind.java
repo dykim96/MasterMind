@@ -14,6 +14,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 public class MasterMind extends Applet implements MouseListener, MouseMotionListener{
 
 	private final Color BROWN = new Color(165, 42, 42);
@@ -26,6 +29,9 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 	private Rectangle board;
 	private ColorPalette cp;
 	private MMButton checkButton;
+	private MMButton pegButton;
+	private MMButton guessButton;
+	private MMButton helpButton;
 	private ArrayList<BoardRow> rows;
 	private Color selectedColor;
 	private ArrayList<FeedBack> feed_Back;
@@ -35,7 +41,7 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 	
 	public void init(){
 		soundFile1 = getAudioClip(getDocumentBase(),"sound/fanfare.wav"); 
-		guessNumber = 2;
+		guessNumber = 12;
 		pegNumber = 4;
 		mouseX = 0;
 		mouseY = 0;
@@ -54,6 +60,9 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 		board = new Rectangle(x, 36, 36*pegNumber, 36 + 36*guessNumber);
 		y = guessNumber * 36 + 36;
 		checkButton = new MMButton(x + board.width, y, 36, 36, "GO");
+		pegButton = new MMButton(0, 0, 68, 36, pegNumber + " Pegs");
+		guessButton = new MMButton(68, 0, 80, 36, guessNumber + " Tries");
+		helpButton = new MMButton(228, 0, 66, 36, "HELP!");
 		rows = new ArrayList<BoardRow>();
 		rows.add(new BoardRow(x, y, pegNumber));
 		cp = new ColorPalette(36, y + 36);
@@ -109,6 +118,47 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 				}
 			}
 		}
+		else if(guessButton.Contains(mouseX, mouseY)){
+			boolean correctFormat = false;
+			while(!correctFormat){
+				try{
+					JFrame frame = new JFrame("Number of Guesses");
+					int g = Integer.parseInt(JOptionPane.showInputDialog(frame , "How many guesses do you want? (6~12)"));
+					if(g >= 6 && g <= 12){
+						if(guessNumber != g){
+							guessNumber = g;
+							ResetBoard();
+						}
+						correctFormat = true;
+					}
+				}
+				catch(NumberFormatException ex){
+					System.out.println("Not a number");
+				}
+			}
+		}
+		else if(pegButton.Contains(mouseX, mouseY)){
+			boolean correctFormat = false;
+			while(!correctFormat){
+				try{
+					JFrame frame = new JFrame("Number of Pegs");
+					int p = Integer.parseInt(JOptionPane.showInputDialog(frame , "How many pegs do you want? (4~6)"));
+					if(p >= 4 && p <= 6){
+						if(pegNumber != p){
+							pegNumber = p;
+							ResetBoard();
+						}
+						correctFormat = true;
+					}
+				}
+				catch(NumberFormatException ex){
+					System.out.println("Not a number");
+				}
+			}
+		}
+		else if(helpButton.Contains(mouseX, mouseY)){
+			
+		}
 		repaint();
 	}
 	
@@ -117,6 +167,9 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 		mouseX = e.getX();
 		mouseY = e.getY();
 		checkButton.SetMouse(mouseX, mouseY);
+		guessButton.SetMouse(mouseX, mouseY);
+		pegButton.SetMouse(mouseX, mouseY);
+		helpButton.SetMouse(mouseX, mouseY);
 		repaint();
 		e.consume();
 	}
@@ -163,8 +216,11 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 		for(int i = 0 ; i < feed_Back.size() ; i ++){
 			feed_Back.get(i).Draw(g2);
 		}
-		//checkButton
+		//draw Buttons
 		checkButton.Draw(g, leftClick);
+		guessButton.Draw(g, leftClick);
+		pegButton.Draw(g, leftClick);
+		helpButton.Draw(g, leftClick);
 		//color palette
     	cp.Draw(g);
     	g.setColor(Color.BLACK);
