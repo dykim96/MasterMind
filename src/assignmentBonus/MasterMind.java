@@ -39,9 +39,10 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 	private boolean audio_Done1 = false;
 	private boolean audio_Done2 = false;
 	public void init(){
-		soundFile1 = getAudioClip(getDocumentBase(),"sound/fanfare.wav");
-		soundFile2 = getAudioClip(getDocumentBase(),"sound/failure.wav"); 
-		guessNumber = 12;
+		
+		soundFile1 = getAudioClip(getCodeBase(),"sound/fanfare.wav");
+		soundFile2 = getAudioClip(getDocumentBase(),"sound/fail2.wav"); 
+		guessNumber = 1;
 		pegNumber = 4;
 		mouseX = 0;
 		mouseY = 0;
@@ -254,6 +255,7 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 	    		soundFile2.play();
 	    		audio_Done2 = true;
 	    	}
+	    	
 	    }
 	}
 }
