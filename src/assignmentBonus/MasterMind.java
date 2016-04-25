@@ -28,10 +28,7 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 	private int guessNumber, pegNumber, numTry;
 	private Rectangle board;
 	private ColorPalette cp;
-	private MMButton checkButton;
-	private MMButton pegButton;
-	private MMButton guessButton;
-	private MMButton helpButton;
+	private MMButton checkButton, pegButton, guessButton, resetButton, helpButton;
 	private ArrayList<BoardRow> rows;
 	private Color selectedColor;
 	private ArrayList<FeedBack> feed_Back;
@@ -62,6 +59,7 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 		checkButton = new MMButton(x + board.width, y, 36, 36, "GO");
 		pegButton = new MMButton(0, 0, 68, 36, pegNumber + " Pegs");
 		guessButton = new MMButton(68, 0, 80, 36, guessNumber + " Tries");
+		resetButton = new MMButton(148, 0, 70, 36, "Restart");
 		helpButton = new MMButton(228, 0, 66, 36, "HELP!");
 		rows = new ArrayList<BoardRow>();
 		rows.add(new BoardRow(x, y, pegNumber));
@@ -131,9 +129,12 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 						}
 						correctFormat = true;
 					}
+					else{
+				        JOptionPane.showMessageDialog(null, "Please choose 6~12");
+					}
 				}
 				catch(NumberFormatException ex){
-					System.out.println("Not a number");
+			        JOptionPane.showMessageDialog(null, "Not a Number!");
 				}
 			}
 		}
@@ -142,7 +143,7 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 			while(!correctFormat){
 				try{
 					JFrame frame = new JFrame("Number of Pegs");
-					int p = Integer.parseInt(JOptionPane.showInputDialog(frame , "How many pegs do you want? (4~6)"));
+					int p = Integer.parseInt(JOptionPane.showInputDialog(frame , "How many pegs do you want? (4~6)", pegNumber));
 					if(p >= 4 && p <= 6){
 						if(pegNumber != p){
 							pegNumber = p;
@@ -150,14 +151,23 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 						}
 						correctFormat = true;
 					}
+					else{
+				        JOptionPane.showMessageDialog(null, "Please choose 4~6");
+					}
 				}
 				catch(NumberFormatException ex){
-					System.out.println("Not a number");
+			        JOptionPane.showMessageDialog(null, "Not a Number!");
 				}
 			}
 		}
+		else if(resetButton.Contains(mouseX, mouseY)){
+			int reply = JOptionPane.showConfirmDialog(null, "Are you sure?", "Confirmation", JOptionPane.YES_NO_OPTION);
+	        if (reply == JOptionPane.YES_OPTION) {
+	        	ResetBoard();
+	        }
+		}
 		else if(helpButton.Contains(mouseX, mouseY)){
-			
+			JOptionPane.showMessageDialog(null, "put the instruction here");
 		}
 		repaint();
 	}
@@ -169,6 +179,7 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 		checkButton.SetMouse(mouseX, mouseY);
 		guessButton.SetMouse(mouseX, mouseY);
 		pegButton.SetMouse(mouseX, mouseY);
+		resetButton.SetMouse(mouseX, mouseY);
 		helpButton.SetMouse(mouseX, mouseY);
 		repaint();
 		e.consume();
@@ -220,6 +231,7 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 		checkButton.Draw(g, leftClick);
 		guessButton.Draw(g, leftClick);
 		pegButton.Draw(g, leftClick);
+		resetButton.Draw(g, leftClick);
 		helpButton.Draw(g, leftClick);
 		//color palette
     	cp.Draw(g);
