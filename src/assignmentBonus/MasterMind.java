@@ -172,7 +172,24 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 	        }
 		}
 		else if(helpButton.Contains(mouseX, mouseY)){
-			JOptionPane.showMessageDialog(null, "put the instruction here");
+			JOptionPane.showMessageDialog(null, "Welcome to The DoyoungKim && HyoJungKim's MasterMind\n"
+															+ "The computer will think of a secret code. \n"
+															+ "The code consists of 4 to 6 colored pegs. \n"
+															+ "The pegs may be one of six colors: Red, Orange, Yellow, Green, Blue, Purple.\n"
+															+ "A color may appear more than once in the code.\n"
+															+ "You try to guess what colored pegs are in the code and what order they are in.\n"
+															+ "After you make a valid guess the result (feedback) will be displayed. \n"
+															+ "The result consists of a black peg for each peg you have guessed exactly correct (color and position) in your guess.  \n"
+															+ "For each peg in the guess that is the correct color, but is out of position, you get a white peg.\n"
+															+ "For each peg, which is fully incorrect, you get no feedback.\n\n" +
+															" Now Assuming you know the Basic Rules about how to play the Game,\n" + 
+															" Let me explain, how to SETUP the game mode.\n" + 
+															" 1. On the Top left, there is a \"Pegs\" button deciding how many pegs you can play with.\n"
+															+ "	       -       you can choose 4, 5, or 6.\n" + 
+															" 2. \"Tries\" button choose how many guesses you can try\n"
+															+ "	       -       You can choose number from 6 to 12.\n" + 
+															" 3. \"Restart\" button reset the game, as you know the meaning \"reset.\"\n" + 
+															" Hope you enjoy our game.\n");
 		}
 		repaint();
 	}
@@ -240,17 +257,19 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 		helpButton.Draw(g, leftClick);
 		//color palette
     	cp.Draw(g);
+    	g.setFont(new Font("Arial", Font.BOLD, 45));
     	g.setColor(Color.BLACK);
-	    g.drawString("(" + mouseX + "," + mouseY + ")", 0, 10);
+	    //g.drawString("(" + mouseX + "," + mouseY + ")", 0, 10);
 	    if(victory){
-	    	g.drawString("YOU WON", 80, 20);
+	   	 g.drawString("YOU WON!", 35, 100);
+	    	
 	    	if(!audio_Done1) {
 	    		soundFile1.play();
 	    		audio_Done1 = true;
 	    	}
 	    }
 	    else if(gameover){
-	    	g.drawString("GAME OVER", 80, 20);
+	    	g.drawString("GAME OVER!", 5, 100);
 	    	if(!audio_Done2) {
 	    		soundFile2.play();
 	    		audio_Done2 = true;
