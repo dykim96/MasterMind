@@ -9,6 +9,7 @@
 package assignmentBonus;
 
 import java.applet.Applet;
+import java.applet.AudioClip;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -29,9 +30,12 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 	private Color selectedColor;
 	private ArrayList<FeedBack> feed_Back;
 	private Generator answer;
+	private AudioClip soundFile1; 
+	private boolean audio_Done = false;
 	
 	public void init(){
-		guessNumber = 12;
+		soundFile1 = getAudioClip(getDocumentBase(),"sound/fanfare.wav"); 
+		guessNumber = 2;
 		pegNumber = 4;
 		mouseX = 0;
 		mouseY = 0;
@@ -56,6 +60,7 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 		selectedColor = cp.GetColor(0);
 		feed_Back = new ArrayList<FeedBack>();
 		answer = new Generator (x,36,pegNumber);
+		audio_Done = false;
 	}
 	
 	public void mouseEntered( MouseEvent e ) { }
@@ -166,9 +171,14 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 	    g.drawString("(" + mouseX + "," + mouseY + ")", 0, 10);
 	    if(victory){
 	    	g.drawString("YOU WON", 80, 20);
+
 	    }
 	    else if(gameover){
 	    	g.drawString("GAME OVER", 80, 20);
+	    	if(!audio_Done) {
+	    		soundFile1.play();
+	    		audio_Done = true;
+	    	}
 	    }
 	}
 }
