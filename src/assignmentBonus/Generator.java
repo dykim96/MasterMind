@@ -29,9 +29,9 @@ public class Generator
 	private Font q_Font;
 	private String question = "?";
 	
-
+	private Color burntOrange = new Color (0.9F, 0.33F, 0.0F);
 	private Color[] ans_Col;
-	private Color[] pick = {Color.red, Color.orange, Color.yellow, Color.green, Color.blue, new Color(255,0,255) };
+	private Color[] pick = {Color.red, burntOrange, Color.yellow, Color.green, Color.blue, new Color(255,0,255) };
 	public Generator(int x, int y, int num_Peg)
 	{
 		q_Font = new Font("Arial", Font.BOLD, 20);

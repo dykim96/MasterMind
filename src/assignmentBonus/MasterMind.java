@@ -18,7 +18,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class MasterMind extends Applet implements MouseListener, MouseMotionListener{
-
+	private Color burntOrange = new Color (0.9F, 0.33F, 0.0F);
 	private final Color BROWN = new Color(165, 42, 42);
 	
 	private boolean victory, gameover;
@@ -42,7 +42,7 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 		
 		soundFile1 = getAudioClip(getCodeBase(),"sound/fanfare.wav");
 		soundFile2 = getAudioClip(getDocumentBase(),"sound/fail2.wav"); 
-		guessNumber = 1;
+		guessNumber = 12;
 		pegNumber = 4;
 		mouseX = 0;
 		mouseY = 0;

@@ -21,7 +21,7 @@ public class ColorPalette {
 	private Ellipse2D[] pegColumns;
 	private Color[] pegColors;
 	private int selected;
-	
+	private Color burntOrange = new Color (0.9F, 0.33F, 0.0F);
 	public ColorPalette(int x, int y){
 		row = new Rectangle(x, y, 36 * 6, 36);
 		pegColumns = new Ellipse2D[6];
@@ -31,7 +31,7 @@ public class ColorPalette {
 			pegColumns[i] = peg;
 		}
 		pegColors[0] = Color.RED;
-		pegColors[1] = Color.ORANGE;
+		pegColors[1] = burntOrange;
 		pegColors[2] = Color.YELLOW;
 		pegColors[3] = Color.GREEN;
 		pegColors[4] = Color.BLUE;
