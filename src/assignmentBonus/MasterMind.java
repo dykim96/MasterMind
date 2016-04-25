@@ -42,7 +42,7 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 		
 		soundFile1 = getAudioClip(getCodeBase(),"sound/fanfare.wav");
 		soundFile2 = getAudioClip(getDocumentBase(),"sound/fail2.wav"); 
-		guessNumber = 12;
+		guessNumber = 6;
 		pegNumber = 4;
 		mouseX = 0;
 		mouseY = 0;
@@ -97,28 +97,34 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 		}
 		//if click was made inside checkRect and if guess is complete, meaning every color was changed
 		//at least once, check the guess with answer and proceed accordingly
-		if(checkButton.Contains(mouseX, mouseY) && rows.get(rows.size() - 1).IsComplete()){
-			//get the feedback from checking
-			feed_Back.add(new FeedBack(x-36 ,y, pegNumber, answer.get_answer(), rows.get(rows.size()-1).GetGuess()));
-			//if guess was correct, player wins
-			if(feed_Back.get(feed_Back.size() - 1).Chk_all()){
-				checkButton.SetXY(-100, -100);
-				answer.Done();
-				victory = true;
-			}
-			//else try again until player wins or runs out of tries
-			else{
-				if(numTry < guessNumber){
-					numTry++;
-					y -= 36;
-					rows.add(new BoardRow(x, y, pegNumber));
-					checkButton.SetXY(x + board.width, y);
-				}
-				else{
+		if(checkButton.Contains(mouseX, mouseY)){// && rows.get(rows.size() - 1).IsComplete()){
+			
+			if (rows.get(rows.size() - 1).IsComplete()){
+				//get the feedback from checking
+				feed_Back.add(new FeedBack(x-36 ,y, pegNumber, answer.get_answer(), rows.get(rows.size()-1).GetGuess()));
+				//if guess was correct, player wins
+				if(feed_Back.get(feed_Back.size() - 1).Chk_all()){
 					checkButton.SetXY(-100, -100);
 					answer.Done();
-					gameover = true;
+					victory = true;
 				}
+				//else try again until player wins or runs out of tries
+				else{
+					if(numTry < guessNumber){
+						numTry++;
+						y -= 36;
+						rows.add(new BoardRow(x, y, pegNumber));
+						checkButton.SetXY(x + board.width, y);
+					}
+					else{
+						checkButton.SetXY(-100, -100);
+						answer.Done();
+						gameover = true;
+					}
+				}
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "INVALID INPUT: Fill all the Blank Spots!");
 			}
 		}
 		else if(guessButton.Contains(mouseX, mouseY)){
@@ -241,9 +247,9 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
     	g2.fill(board);
     	g2.setColor(Color.BLACK);
     	g2.draw(board);
-    	g.setFont(new Font("Arial", Font.BOLD, 30));
-    	g.drawString("By Doyoung", 40, 40);
-    	g.drawString("& Hyo-Jung", 40, 80);
+    	g.setFont(new Font("Arial", Font.BOLD, 23));
+    	g.drawString("By Doyoung", 77, 140);
+    	g.drawString("& Hyo-Jung", 77, 180);
 		for(int i = 0; i < rows.size(); i++){
 			rows.get(i).Draw(g);
 		}
