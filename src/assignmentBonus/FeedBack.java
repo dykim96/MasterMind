@@ -14,7 +14,6 @@ import java.awt.Rectangle;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 
-
 public class FeedBack
 {
 	int ori_x = 0;

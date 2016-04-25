@@ -39,9 +39,6 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 		addMouseListener(this);
 		addMouseMotionListener(this);
 		
-		
-		
-		
 		ResetBoard();
 	}
 	
@@ -58,8 +55,7 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 		cp = new ColorPalette(36, y + 36);
 		selectedColor = cp.GetColor(0);
 		feed_Back = new ArrayList<FeedBack>();
-		answer = new Generator (x,36,pegNumber);  // location has to be changed
-		
+		answer = new Generator (x,36,pegNumber);
 	}
 	
 	public void mouseEntered( MouseEvent e ) { }
@@ -86,19 +82,26 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 		//at least once, check the guess with answer and proceed accordingly
 		if(checkButton.Contains(mouseX, mouseY) && rows.get(rows.size() - 1).IsComplete()){
 			//get the feedback from checking
-			//if guess was correct, player wins
 			feed_Back.add(new FeedBack(x-36 ,y, pegNumber, answer.get_answer(), rows.get(rows.size()-1).GetGuess()));
-			
-			//else try again until player wins or runs out of tries
-			if(numTry < guessNumber){
-				numTry++;
-				y -= 36;
-				rows.add(new BoardRow(x, y, pegNumber));
-				checkButton.SetXY(x + board.width, y);
-			}
-			else{
+			//if guess was correct, player wins
+			if(feed_Back.get(feed_Back.size() - 1).Chk_all()){
 				checkButton.SetXY(-100, -100);
-				gameover = true;
+				answer.Done();
+				victory = true;
+			}
+			//else try again until player wins or runs out of tries
+			else{
+				if(numTry < guessNumber){
+					numTry++;
+					y -= 36;
+					rows.add(new BoardRow(x, y, pegNumber));
+					checkButton.SetXY(x + board.width, y);
+				}
+				else{
+					checkButton.SetXY(-100, -100);
+					answer.Done();
+					gameover = true;
+				}
 			}
 		}
 		repaint();
@@ -157,14 +160,14 @@ public class MasterMind extends Applet implements MouseListener, MouseMotionList
 		}
 		//checkButton
 		checkButton.Draw(g, leftClick);
-		//color palette/
+		//color palette
     	cp.Draw(g);
+    	g.setColor(Color.BLACK);
 	    g.drawString("(" + mouseX + "," + mouseY + ")", 0, 10);
 	    if(victory){
-	    	
+	    	g.drawString("YOU WON", 80, 20);
 	    }
 	    else if(gameover){
-	   	
 	    	g.drawString("GAME OVER", 80, 20);
 	    }
 	}
