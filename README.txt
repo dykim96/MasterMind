@@ -38,3 +38,8 @@ Driver: MasterMind.java
 //extra space on bottom for selecting a color
 
 //most top row is always reserved for the answer(generated pattern)
+
+//There are two music files that must be placed inorder to play music at the end
+// it has to be placed in "sound" folder insider of "bin" folder.
+// ex: C:\Users\doasi_000\git\MasterMind\bin\sound\music.wav.
+// otherwise music will not be able to play.
